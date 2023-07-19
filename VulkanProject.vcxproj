@@ -159,22 +159,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="compile.bat" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="headfile\first_app.h" />
     <ClInclude Include="headfile\lve_device.h" />
+    <ClInclude Include="headfile\lve_model.h" />
     <ClInclude Include="headfile\lve_pipeline.h" />
     <ClInclude Include="headfile\lve_swap_chain.h" />
     <ClInclude Include="headfile\lve_window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scrfile\first_app.cpp" />
-    <ClCompile Include="scrfile\lve_device.cpp" />
-    <ClCompile Include="scrfile\lve_pipeline.cpp" />
-    <ClCompile Include="scrfile\lve_swap_chain.cpp" />
-    <ClCompile Include="scrfile\lve_window.cpp" />
-    <ClCompile Include="scrfile\main.cpp" />
+    <ClCompile Include="srcfile\first_app.cpp" />
+    <ClCompile Include="srcfile\lve_device.cpp" />
+    <ClCompile Include="srcfile\lve_model.cpp" />
+    <ClCompile Include="srcfile\lve_pipeline.cpp" />
+    <ClCompile Include="srcfile\lve_swap_chain.cpp" />
+    <ClCompile Include="srcfile\lve_window.cpp" />
+    <ClCompile Include="srcfile\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

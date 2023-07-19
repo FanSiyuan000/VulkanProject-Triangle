@@ -124,7 +124,7 @@ namespace lve {
 	//vulkan不使用参数调用函数，而是配置一个结构体并使用指向它的指针调用一个函数
 
 	void LvePipeline::bind(VkCommandBuffer commandBuffer) {
-		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);//绑定管道
 	}
 
 	PipelineConfigInfo LvePipeline::defaultPipelineConfigInfo(uint32_t width, uint32_t height) {

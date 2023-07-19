@@ -14,11 +14,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="compile.bat">
-      <Filter>srcfile</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="headfile\first_app.h">
       <Filter>Headfile</Filter>
     </ClInclude>
@@ -34,24 +29,30 @@
     <ClInclude Include="headfile\lve_swap_chain.h">
       <Filter>Headfile</Filter>
     </ClInclude>
+    <ClInclude Include="headfile\lve_model.h">
+      <Filter>Headfile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scrfile\first_app.cpp">
+    <ClCompile Include="srcfile\first_app.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
-    <ClCompile Include="scrfile\lve_pipeline.cpp">
+    <ClCompile Include="srcfile\lve_device.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
-    <ClCompile Include="scrfile\lve_window.cpp">
+    <ClCompile Include="srcfile\lve_pipeline.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
-    <ClCompile Include="scrfile\main.cpp">
+    <ClCompile Include="srcfile\lve_swap_chain.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
-    <ClCompile Include="scrfile\lve_device.cpp">
+    <ClCompile Include="srcfile\lve_window.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
-    <ClCompile Include="scrfile\lve_swap_chain.cpp">
+    <ClCompile Include="srcfile\main.cpp">
+      <Filter>srcfile</Filter>
+    </ClCompile>
+    <ClCompile Include="srcfile\lve_model.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
   </ItemGroup>
