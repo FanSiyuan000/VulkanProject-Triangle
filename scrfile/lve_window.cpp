@@ -1,5 +1,7 @@
 #include "lve_window.h"
 
+#include <stdexcept>
+
 namespace lve {
 	LveWindow::LveWindow(int w, int h, std::string name) : width{ w }, height{ h }, windowName{ name } {
 		initWindow();//调用initWindow
@@ -18,4 +20,10 @@ namespace lve {
 		window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);//创建窗口命令
 
 	}//实现initWindow，需要调用glfwInit初始化GLFW库
+
+	void LveWindow::createWindowSurface(VkInstance instance, VkSurfaceKHR* surface) {
+		if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create window surface");
+		}
+	}
 }

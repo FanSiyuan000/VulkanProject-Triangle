@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\headfile;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\headfile;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\headfile;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\x64;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\13205\Desktop\Project\VulkanProject\headfile;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,13 +159,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="first_app.cpp" />
-    <ClCompile Include="lve_window.cpp" />
-    <ClCompile Include="main.cpp" />
+    <None Include="compile.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="first_app.h" />
-    <ClInclude Include="lve_window.h" />
+    <ClInclude Include="headfile\first_app.h" />
+    <ClInclude Include="headfile\lve_device.h" />
+    <ClInclude Include="headfile\lve_pipeline.h" />
+    <ClInclude Include="headfile\lve_swap_chain.h" />
+    <ClInclude Include="headfile\lve_window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="scrfile\first_app.cpp" />
+    <ClCompile Include="scrfile\lve_device.cpp" />
+    <ClCompile Include="scrfile\lve_pipeline.cpp" />
+    <ClCompile Include="scrfile\lve_swap_chain.cpp" />
+    <ClCompile Include="scrfile\lve_window.cpp" />
+    <ClCompile Include="scrfile\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

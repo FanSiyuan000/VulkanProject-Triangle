@@ -13,13 +13,16 @@ namespace lve {
 		LveWindow(int w, int h, std::string name);
 		~LveWindow();//析构器清理
 		
-		LveWindow(const LveWindow&) = delete;
-		LveWindow& operator = (const LveWindow&) = delete;
-		//删除复制构造函数与复制运算符
 
 		bool shouldClose() {
 			return glfwWindowShouldClose(window);
 		}//公共构造函数获取将用于初始化成员变量的值
+
+		VkExtent2D getExtent() {
+			return { static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
+		}
+
+		void createWindowSurface(VkInstance instance, VkSurfaceKHR* surface);
 
 	private:
 
