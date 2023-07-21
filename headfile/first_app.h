@@ -4,6 +4,7 @@
 #include "lve_pipeline.h"
 #include "lve_device.h"
 #include "lve_swap_chain.h"
+#include "lve_model.h"
 
 #include <memory>
 #include <vector>
@@ -24,6 +25,7 @@ namespace lve {
 		void run();//运行函数
 
 	private:
+		void loadModels();
 		void createPipelineLayout();
 		void createPipeline();
 		void createCommandBuffers();
@@ -36,6 +38,7 @@ namespace lve {
 		std::unique_ptr<LvePipeline> lvePipeline;//智能指针
 		VkPipelineLayout pipelineLayout;
 		std::vector<VkCommandBuffer> commandBuffers;
+		std::unique_ptr<LveModel> lveModel;
 		//使管道对象成为唯一的指针
 		//LvePipeline lvePipeline{lveDevice, 
 		//	"shaders/simple_shader.vert.spv", 
