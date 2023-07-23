@@ -34,7 +34,7 @@ namespace lve {
 
         // Not copyable or movable
         LveDevice(const LveDevice&) = delete;
-        void operator=(const LveDevice&) = delete;
+        LveDevice& operator=(const LveDevice&) = delete;
         LveDevice(LveDevice&&) = delete;
         LveDevice& operator=(LveDevice&&) = delete;
 
@@ -104,4 +104,4 @@ namespace lve {
         const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
     };
 
-}  // namespace lve
+}

@@ -49,12 +49,12 @@ namespace lve {
 
     // class member functions
     LveDevice::LveDevice(LveWindow& window) : window{ window } {
-        createInstance();//创建Vulkan实例以及初始化
-        setupDebugMessenger();//设置验证层
-        createSurface();//创建窗口，Vulkan显示连接
-        pickPhysicalDevice();//选择程序运行物理硬件
-        createLogicalDevice();//逻辑设备创建
-        createCommandPool();//设置命令池
+        createInstance();
+        setupDebugMessenger();
+        createSurface();
+        pickPhysicalDevice();
+        createLogicalDevice();
+        createCommandPool();
     }
 
     LveDevice::~LveDevice() {
@@ -216,11 +216,11 @@ namespace lve {
             supportedFeatures.samplerAnisotropy;
     }
 
-    void LveDevice::populateDebugMessengerCreateInfo(
-        VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
+    void LveDevice::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo) {
         createInfo = {};
         createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-        createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+        createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+            VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
             VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
         createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
             VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
@@ -535,4 +535,4 @@ namespace lve {
         }
     }
 
-}  // namespace lve
+}
