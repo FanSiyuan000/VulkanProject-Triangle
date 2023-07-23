@@ -13,30 +13,31 @@ namespace lve {
         const std::string& vertFilepath,
         const std::string& fragFilepath,
         const PipelineConfigInfo& configInfo)
-        : lveDevice{ device } {
+        : lveDevice{ device } //成员初始值设定列表初始化设备
+    {
         createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
-    }
+    }//构造函数，传递参数
 
     LvePipeline::~LvePipeline() {
         vkDestroyShaderModule(lveDevice.device(), vertShaderModule, nullptr);
         vkDestroyShaderModule(lveDevice.device(), fragShaderModule, nullptr);
         vkDestroyPipeline(lveDevice.device(), graphicsPipeline, nullptr);
-    }
+    }//清理vulkan对象
 
     std::vector<char> LvePipeline::readFile(const std::string& filepath) {
-        std::ifstream file{filepath, std::ios::ate | std::ios::binary};
+        std::ifstream file{filepath, std::ios::ate | std::ios::binary};//读取着色器文件
 
         if (!file.is_open()) {
             throw std::runtime_error("failed to open file: " + filepath);
-        }
+        }//检查文件是否打开
 
-        size_t fileSize = static_cast<size_t>(file.tellg());
-        std::vector<char> buffer(fileSize);
+        size_t fileSize = static_cast<size_t>(file.tellg());//获取文件大小
+        std::vector<char> buffer(fileSize);//字符缓冲区
 
         file.seekg(0);
-        file.read(buffer.data(), fileSize);
+        file.read(buffer.data(), fileSize);//寻找文件开头并读取
 
-        file.close();
+        file.close();//关闭文件
         return buffer;
     }
 
@@ -52,20 +53,22 @@ namespace lve {
             "Cannot create graphics pipeline: no renderPass provided in configInfo");
 
         auto vertCode = readFile(vertFilepath);
-        auto fragCode = readFile(fragFilepath);
+        auto fragCode = readFile(fragFilepath);//读取顶点以及片段代码
+		//创建图形管道函数以及类名
 
         createShaderModule(vertCode, &vertShaderModule);
-        createShaderModule(fragCode, &fragShaderModule);
+        createShaderModule(fragCode, &fragShaderModule);//初始化着色器模块
 
-        VkPipelineShaderStageCreateInfo shaderStages[2];
-        shaderStages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-        shaderStages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;
-        shaderStages[0].module = vertShaderModule;
-        shaderStages[0].pName = "main";
+        VkPipelineShaderStageCreateInfo shaderStages[2];//为着色器设置更多创建信息
+        shaderStages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;//第一个实例类型设置
+        shaderStages[0].stage = VK_SHADER_STAGE_VERTEX_BIT;//着色器阶段顶点位
+        shaderStages[0].module = vertShaderModule;//变量设置为等于vert着色器模块
+        shaderStages[0].pName = "main";//顶点着色器入口函数名称
         shaderStages[0].flags = 0;
         shaderStages[0].pNext = nullptr;
         shaderStages[0].pSpecializationInfo = nullptr;
-        shaderStages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+
+        shaderStages[1].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;//frag着色器
         shaderStages[1].stage = VK_SHADER_STAGE_FRAGMENT_BIT;
         shaderStages[1].module = fragShaderModule;
         shaderStages[1].pName = "main";
@@ -75,19 +78,19 @@ namespace lve {
 
         auto bindingDescriptions = LveModel::Vertex::getBindingDescriptions();
         auto attributeDescriptions = LveModel::Vertex::getAttributeDescriptions();
-        VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-        vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+        VkPipelineVertexInputStateCreateInfo vertexInputInfo{};//解释顶点缓冲区数据，初始输入到图形管道
+        vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;//设置为vk结构类型管道顶点输入状态
         vertexInputInfo.vertexAttributeDescriptionCount =
-            static_cast<uint32_t>(attributeDescriptions.size());
+            static_cast<uint32_t>(attributeDescriptions.size());//顶点与顶点绑定描述计数设置
         vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
         vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
         vertexInputInfo.pVertexBindingDescriptions = bindingDescriptions.data();
 
-        VkGraphicsPipelineCreateInfo pipelineInfo{};
+        VkGraphicsPipelineCreateInfo pipelineInfo{};//配置所有图形管道对象
         pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
-        pipelineInfo.stageCount = 2;
+        pipelineInfo.stageCount = 2;//成员变量，指定使用多少可编程阶段
         pipelineInfo.pStages = shaderStages;
-        pipelineInfo.pVertexInputState = &vertexInputInfo;
+        pipelineInfo.pVertexInputState = &vertexInputInfo;//管道创建信息连接到配置信息
         pipelineInfo.pInputAssemblyState = &configInfo.inputAssemblyInfo;
         pipelineInfo.pViewportState = &configInfo.viewportInfo;
         pipelineInfo.pRasterizationState = &configInfo.rasterizationInfo;
@@ -96,12 +99,12 @@ namespace lve {
         pipelineInfo.pDepthStencilState = &configInfo.depthStencilInfo;
         pipelineInfo.pDynamicState = &configInfo.dynamicStateInfo;
 
-        pipelineInfo.layout = configInfo.pipelineLayout;
+        pipelineInfo.layout = configInfo.pipelineLayout;//布局渲染通道，子通道索引传递
         pipelineInfo.renderPass = configInfo.renderPass;
         pipelineInfo.subpass = configInfo.subpass;
 
-        pipelineInfo.basePipelineIndex = -1;
-        pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
+        pipelineInfo.basePipelineIndex = -1;//基本管道句柄
+        pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;//基本管道句柄
 
         if (vkCreateGraphicsPipelines(
             lveDevice.device(),
@@ -116,23 +119,29 @@ namespace lve {
 
     void LvePipeline::createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule) {
         VkShaderModuleCreateInfo createInfo{};
-        createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;//着色器创建信息
         createInfo.codeSize = code.size();
         createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+        //指向代码的指针，需要对数据使用重新解释转换，Vulkan需要uint32类型
 
         if (vkCreateShaderModule(lveDevice.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS) {
             throw std::runtime_error("failed to create shader module");
         }
     }
+    //本地vulkan着色器模块
+    //vulkan不使用参数调用函数，而是配置一个结构体并使用指向它的指针调用一个函数
 
     void LvePipeline::bind(VkCommandBuffer commandBuffer) {
-        vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+        vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);//绑定管道
     }
 
     void LvePipeline::defaultPipelineConfigInfo(PipelineConfigInfo& configInfo) {
         configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+        //s类型设置为vk结构类型
         configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
+        //拓扑成员为vk基元拓扑三角形列表
         configInfo.inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;
+        //基元重新启动启用值为VK_FALSE
 
         configInfo.viewportInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
         configInfo.viewportInfo.viewportCount = 1;
@@ -140,25 +149,29 @@ namespace lve {
         configInfo.viewportInfo.scissorCount = 1;
         configInfo.viewportInfo.pScissors = nullptr;
 
-        configInfo.rasterizationInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
-        configInfo.rasterizationInfo.depthClampEnable = VK_FALSE;
-        configInfo.rasterizationInfo.rasterizerDiscardEnable = VK_FALSE;
-        configInfo.rasterizationInfo.polygonMode = VK_POLYGON_MODE_FILL;
+        configInfo.rasterizationInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;//设置结构类型成员
+        configInfo.rasterizationInfo.depthClampEnable = VK_FALSE;//深度钳位启动设置，强制gl位置z分量在0-1，小于0，钳位到0，大于1，钳位到1
+        configInfo.rasterizationInfo.rasterizerDiscardEnable = VK_FALSE;//光栅化之前丢弃所有基元
+        configInfo.rasterizationInfo.polygonMode = VK_POLYGON_MODE_FILL;//多边形模型
         configInfo.rasterizationInfo.lineWidth = 1.0f;
         configInfo.rasterizationInfo.cullMode = VK_CULL_MODE_NONE;
         configInfo.rasterizationInfo.frontFace = VK_FRONT_FACE_CLOCKWISE;
+        //使用以上两个属性唯一标识看到的三角形的那一侧，需要指定逆时针或顺时针
         configInfo.rasterizationInfo.depthBiasEnable = VK_FALSE;
         configInfo.rasterizationInfo.depthBiasConstantFactor = 0.0f;  // Optional
         configInfo.rasterizationInfo.depthBiasClamp = 0.0f;           // Optional
         configInfo.rasterizationInfo.depthBiasSlopeFactor = 0.0f;     // Optional
+        //光栅化阶段,将几何体分解为每个像素或三角形重叠的片段
 
         configInfo.multisampleInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
         configInfo.multisampleInfo.sampleShadingEnable = VK_FALSE;
+        //启用颜色混合，可以设置如何混合颜色的值，将当前输出与缓冲区中已有颜色值进行混合
         configInfo.multisampleInfo.rasterizationSamples = VK_SAMPLE_COUNT_1_BIT;
         configInfo.multisampleInfo.minSampleShading = 1.0f;           // Optional
         configInfo.multisampleInfo.pSampleMask = nullptr;             // Optional
         configInfo.multisampleInfo.alphaToCoverageEnable = VK_FALSE;  // Optional
         configInfo.multisampleInfo.alphaToOneEnable = VK_FALSE;       // Optional
+        //多重采样
 
         configInfo.colorBlendAttachment.colorWriteMask =
             VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
@@ -180,6 +193,7 @@ namespace lve {
         configInfo.colorBlendInfo.blendConstants[1] = 0.0f;  // Optional
         configInfo.colorBlendInfo.blendConstants[2] = 0.0f;  // Optional
         configInfo.colorBlendInfo.blendConstants[3] = 0.0f;  // Optional
+        //颜色混合控制,在帧缓冲区中组合颜色
 
         configInfo.depthStencilInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO;
         configInfo.depthStencilInfo.depthTestEnable = VK_TRUE;
@@ -191,6 +205,7 @@ namespace lve {
         configInfo.depthStencilInfo.stencilTestEnable = VK_FALSE;
         configInfo.depthStencilInfo.front = {};  // Optional
         configInfo.depthStencilInfo.back = {};   // Optional
+        //深度测试
 
         configInfo.dynamicStateEnables = { VK_DYNAMIC_STATE_VIEWPORT, VK_DYNAMIC_STATE_SCISSOR };
         configInfo.dynamicStateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -199,5 +214,5 @@ namespace lve {
             static_cast<uint32_t>(configInfo.dynamicStateEnables.size());
         configInfo.dynamicStateInfo.flags = 0;
     }
-
+    //默认管道配置信息函数
 } 

@@ -49,12 +49,12 @@ namespace lve {
 
     // class member functions
     LveDevice::LveDevice(LveWindow& window) : window{ window } {
-        createInstance();
-        setupDebugMessenger();
-        createSurface();
-        pickPhysicalDevice();
-        createLogicalDevice();
-        createCommandPool();
+        createInstance();//创建Vulkan实例以及初始化
+        setupDebugMessenger();//设置验证层
+        createSurface();//创建窗口，Vulkan显示连接
+        pickPhysicalDevice();//选择程序运行物理硬件
+        createLogicalDevice();//逻辑设备创建
+        createCommandPool();//设置命令池
     }
 
     LveDevice::~LveDevice() {
