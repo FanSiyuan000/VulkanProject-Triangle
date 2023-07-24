@@ -2,9 +2,8 @@
 
 #include "lve_device.h"
 #include "lve_game_object.h"
-#include "lve_pipeline.h"
-#include "lve_swap_chain.h"
 #include "lve_window.h"
+#include "lve_renderer.h"
 
 #include <memory>
 #include <vector>
@@ -25,22 +24,12 @@ namespace lve {
 
 	private:
 		void loadGameObjects();
-		void createPipelineLayout();
-		void createPipeline();
-		void createCommandBuffers();
-		void freeCommandBuffers();
-		void drawFrame();
-		void recreateSwapChain();
-		void recordCommandBuffer(int imageIndex);
-		void renderGameObjects(VkCommandBuffer commandBuffer);
 
 		LveWindow lveWindow{ WIDTH, HEIGHT, "Vulkan Tutorial" };//创建并打开一个窗口，销毁时，window自动破坏
 		LveDevice lveDevice{ lveWindow };
-		std::unique_ptr<LveSwapChain> lveSwapChain;
-		std::unique_ptr<LvePipeline> lvePipeline;//智能指针
-		VkPipelineLayout pipelineLayout;
-		std::vector<VkCommandBuffer> commandBuffers;
-		std::vector<LveGameObject> gameObject;
+		LveRenderer lveRenderer{lveWindow, lveDevice};
+
+		std::vector<LveGameObject> gameObjects;
 		//使管道对象成为唯一的指针
 		//LvePipeline lvePipeline{lveDevice, 
 		//	"shaders/simple_shader.vert.spv", 

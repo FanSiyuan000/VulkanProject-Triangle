@@ -164,17 +164,21 @@
     <ClInclude Include="headfile\lve_game_object.h" />
     <ClInclude Include="headfile\lve_model.h" />
     <ClInclude Include="headfile\lve_pipeline.h" />
+    <ClInclude Include="headfile\lve_renderer.h" />
     <ClInclude Include="headfile\lve_swap_chain.h" />
     <ClInclude Include="headfile\lve_window.h" />
+    <ClInclude Include="headfile\simple_render_system.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="srcfile\first_app.cpp" />
     <ClCompile Include="srcfile\lve_device.cpp" />
     <ClCompile Include="srcfile\lve_model.cpp" />
     <ClCompile Include="srcfile\lve_pipeline.cpp" />
+    <ClCompile Include="srcfile\lve_renderer.cpp" />
     <ClCompile Include="srcfile\lve_swap_chain.cpp" />
     <ClCompile Include="srcfile\lve_window.cpp" />
     <ClCompile Include="srcfile\main.cpp" />
+    <ClCompile Include="srcfile\simlpe_render_system.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

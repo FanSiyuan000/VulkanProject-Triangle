@@ -35,6 +35,12 @@
     <ClInclude Include="headfile\lve_game_object.h">
       <Filter>Headfile</Filter>
     </ClInclude>
+    <ClInclude Include="headfile\lve_renderer.h">
+      <Filter>Headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="headfile\simple_render_system.h">
+      <Filter>Headfile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="srcfile\first_app.cpp">
@@ -56,6 +62,12 @@
       <Filter>srcfile</Filter>
     </ClCompile>
     <ClCompile Include="srcfile\lve_model.cpp">
+      <Filter>srcfile</Filter>
+    </ClCompile>
+    <ClCompile Include="srcfile\lve_renderer.cpp">
+      <Filter>srcfile</Filter>
+    </ClCompile>
+    <ClCompile Include="srcfile\simlpe_render_system.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
   </ItemGroup>
