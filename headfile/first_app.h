@@ -1,7 +1,7 @@
 #pragma once
 
 #include "lve_device.h"
-#include "lve_model.h"
+#include "lve_game_object.h"
 #include "lve_pipeline.h"
 #include "lve_swap_chain.h"
 #include "lve_window.h"
@@ -24,7 +24,7 @@ namespace lve {
 		void run();//运行函数
 
 	private:
-		void loadModels();
+		void loadGameObjects();
 		void createPipelineLayout();
 		void createPipeline();
 		void createCommandBuffers();
@@ -32,6 +32,7 @@ namespace lve {
 		void drawFrame();
 		void recreateSwapChain();
 		void recordCommandBuffer(int imageIndex);
+		void renderGameObjects(VkCommandBuffer commandBuffer);
 
 		LveWindow lveWindow{ WIDTH, HEIGHT, "Vulkan Tutorial" };//创建并打开一个窗口，销毁时，window自动破坏
 		LveDevice lveDevice{ lveWindow };
@@ -39,7 +40,7 @@ namespace lve {
 		std::unique_ptr<LvePipeline> lvePipeline;//智能指针
 		VkPipelineLayout pipelineLayout;
 		std::vector<VkCommandBuffer> commandBuffers;
-		std::unique_ptr<LveModel> lveModel;
+		std::vector<LveGameObject> gameObject;
 		//使管道对象成为唯一的指针
 		//LvePipeline lvePipeline{lveDevice, 
 		//	"shaders/simple_shader.vert.spv", 

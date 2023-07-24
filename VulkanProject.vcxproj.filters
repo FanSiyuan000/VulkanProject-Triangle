@@ -32,6 +32,9 @@
     <ClInclude Include="headfile\lve_model.h">
       <Filter>Headfile</Filter>
     </ClInclude>
+    <ClInclude Include="headfile\lve_game_object.h">
+      <Filter>Headfile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="srcfile\first_app.cpp">
