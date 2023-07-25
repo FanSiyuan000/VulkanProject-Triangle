@@ -1,10 +1,9 @@
-# VulkanProject-Triangle
+# VulkanProject、
 
-Based on vs2022, Vulkan SDK Version1.2.198.1
+Developed on vs2022, Vulkan SDK Version1.2.198.1
 
-Finished drawing a triangle.
-Means the vulkan pipeline and command buffer was built.
+2023/07/25
 
-Aim to build a basic vulkan engine, still many functions need to accomplish.
+I have created a new repositories called VukanProject-3D, but I don't know why, when I clone project from github, my local file path of proj. is changing.
 
-I try to use github as the code management tool, but I always make a mess, omg.
+Up to now, it can render a 3D cube with rotation.
