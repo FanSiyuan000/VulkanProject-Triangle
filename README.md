@@ -1,4 +1,4 @@
-# VulkanProject、
+# VulkanProject
 
 Developed on vs2022, Vulkan SDK Version1.2.198.1
 
