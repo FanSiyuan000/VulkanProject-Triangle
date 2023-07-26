@@ -20,6 +20,7 @@ namespace lve {
 		//删除复制构造函数与复制运算符
 
 		VkRenderPass getSwapChainRenderPass() const { return lveSwapChain->getRenderPass(); }
+		float getAspectRatio() const { return lveSwapChain->extentAspectRatio(); }
 		bool isFrameInProgress() const { return isFrameStarted; }
 
 		VkCommandBuffer getCurrentCommandBuffer() const { 

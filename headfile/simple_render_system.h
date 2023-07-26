@@ -3,6 +3,7 @@
 #include "lve_device.h"
 #include "lve_game_object.h"
 #include "lve_pipeline.h"
+#include "lve_camera.h"
 
 #include <memory>
 #include <vector>
@@ -17,7 +18,9 @@ namespace lve {
 		SimpleRenderSystem& operator=(const SimpleRenderSystem&) = delete;
 		//删除复制构造函数与复制运算符
 
-		void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<LveGameObject> &gameObjects);
+		void renderGameObjects(VkCommandBuffer commandBuffer, 
+			std::vector<LveGameObject> &gameObjects,
+			const LveCamera &camera);
 
 	private:
 		void createPipelineLayout();

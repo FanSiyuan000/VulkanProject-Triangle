@@ -41,6 +41,12 @@
     <ClInclude Include="headfile\simple_render_system.h">
       <Filter>Headfile</Filter>
     </ClInclude>
+    <ClInclude Include="headfile\lve_camera.h">
+      <Filter>Headfile</Filter>
+    </ClInclude>
+    <ClInclude Include="headfile\lve_controller.h">
+      <Filter>Headfile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="srcfile\first_app.cpp">
@@ -68,6 +74,12 @@
       <Filter>srcfile</Filter>
     </ClCompile>
     <ClCompile Include="srcfile\simlpe_render_system.cpp">
+      <Filter>srcfile</Filter>
+    </ClCompile>
+    <ClCompile Include="srcfile\lve_camera.cpp">
+      <Filter>srcfile</Filter>
+    </ClCompile>
+    <ClCompile Include="srcfile\lve_controller.cpp">
       <Filter>srcfile</Filter>
     </ClCompile>
   </ItemGroup>

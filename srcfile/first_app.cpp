@@ -1,5 +1,7 @@
 #include "first_app.h"
 
+#include "lve_controller.h"
+#include "lve_camera.h"
 #include "simple_render_system.h"
 
 #define GLM_FORCE_RADIANS
@@ -8,6 +10,7 @@
 #include <glm/gtc/constants.hpp>
 
 #include <array>
+#include <chrono>
 #include <cassert>
 #include <stdexcept>
 
@@ -21,13 +24,34 @@ namespace lve {
 
     void FirstApp::run() {
         SimpleRenderSystem simpleRenderSystem{lveDevice, lveRenderer.getSwapChainRenderPass()};
+        LveCamera camera{};
+        /*camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
+        camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));*/
+
+        auto viewerObject = LveGameObject::createGameObject();
+        KeyboardMovementController cameraController{};
+
+        auto currrentTime = std::chrono::high_resolution_clock::now();
 
         while (!lveWindow.shouldClose()) {//为窗口调用一个虚构函数，是否关闭
             glfwPollEvents();//检查与处理窗口级别的事件
+
+            auto newTime = std::chrono::high_resolution_clock::now();
+            float frameTime = std::chrono::duration<float, std::chrono::seconds::period>(newTime - currrentTime).count();
+            currrentTime = newTime;
+
             
+
+            cameraController.moveInPlaneXZ(lveWindow.getGLFWwindow(), frameTime, viewerObject);
+            camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+
+            float aspect = lveRenderer.getAspectRatio();
+            //camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
+
             if (auto commandBuffer = lveRenderer.beginFrame()) {
                 lveRenderer.beginSwapChainRenderPass(commandBuffer);
-                simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects);
+                simpleRenderSystem.renderGameObjects(commandBuffer, gameObjects, camera);
                 lveRenderer.endSwapChainRenderPass(commandBuffer);
                 lveRenderer.endFrame();
             }
@@ -99,7 +123,7 @@ namespace lve {
         std::shared_ptr<LveModel> lveModel = createCubeModel(lveDevice, {.0f, .0f, .0f});
         auto cube = LveGameObject::createGameObject();
         cube.model = lveModel;
-        cube.transform.translation = { .0f, .0f, .5f };
+        cube.transform.translation = { .0f, .0f, 2.5f };
         cube.transform.scale = { .5f, .5f, .5f };
         gameObjects.push_back(std::move(cube));
     }
