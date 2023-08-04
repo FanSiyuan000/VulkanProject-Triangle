@@ -25,7 +25,7 @@ namespace lve {
 	private:
 		void loadGameObjects();
 
-		LveWindow lveWindow{ WIDTH, HEIGHT, "Vulkan Tutorial" };//创建并打开一个窗口，销毁时，window自动破坏
+		LveWindow lveWindow{ WIDTH, HEIGHT, "Vulkan Renderer" };//创建并打开一个窗口，销毁时，window自动破坏
 		LveDevice lveDevice{ lveWindow };
 		LveRenderer lveRenderer{lveWindow, lveDevice};
 
