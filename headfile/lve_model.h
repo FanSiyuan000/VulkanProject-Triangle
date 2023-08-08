@@ -45,6 +45,7 @@ namespace lve {
         //对于vulkan的缓冲区对象，缓冲区及其分配的内存是两个单独的对象，而不是自动为缓冲区分配内存
         uint32_t vertexCount;
 
+
         bool hasIndexBuffer = false;
         VkBuffer indexBuffer;
         VkDeviceMemory indexBufferMemory;
